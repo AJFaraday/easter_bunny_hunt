@@ -5,7 +5,6 @@ class Bunny {
     this.x = 25;
     this.y = 25;
     this.eggs_remaining = 100;
-    this.caught = false;
   }
 
   move() {
@@ -22,38 +21,38 @@ class Bunny {
   }
 
   hop_x() {
-    return this.hunters_right() - this.hunters_left();
+    return this.kids_right() - this.kids_left();
   }
 
   hop_y() {
-    return this.hunters_below() - this.hunters_above();
+    return this.kids_below() - this.kids_above();
   }
 
-  hunters_above() {
+  kids_above() {
     var bunny = this;
-    return this.game.hunters.filter(
-      function(h) {return h.y < bunny.y}
+    return this.game.kids.filter(
+      function(k) {return k.y < bunny.y}
     );
   }
 
-  hunters_below() {
+  kids_below() {
     var bunny = this;
-    return this.game.hunters.filter(
-      function(h) {return h.y > bunny.y}
+    return this.game.kids.filter(
+      function(k) {return k.y > bunny.y}
     );
   }
 
-  hunters_left() {
+  kids_left() {
     var bunny = this;
-    return this.game.hunters.filter(
-      function(h) {return h.x < bunny.x}
+    return this.game.kids.filter(
+      function(k) {return k.x < bunny.x}
     );
   }
 
-  hunters_right() {
+  kids_right() {
     var bunny = this;
-    return this.game.hunters.filter(
-      function(h) {return h.x > bunny.x}
+    return this.game.kids.filter(
+      function(k) {return k.x > bunny.x}
     );
   }
 
