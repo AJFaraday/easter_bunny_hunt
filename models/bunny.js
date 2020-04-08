@@ -22,7 +22,7 @@ class Bunny {
   }
 
   hop_x() {
-    return this.hunters_left() - this.hunters_right();
+    return this.hunters_right() - this.hunters_left();
   }
 
   hop_y() {
