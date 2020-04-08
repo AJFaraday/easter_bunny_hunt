@@ -1,6 +1,42 @@
 Teams = {};
 class Game {
 
+  static run_all() {
+    var scores = [];
+    Teams.forEach(
+      function(team) {
+        var game = Game.new(team);
+        game.run(); 
+        scores.push({name: game.name, score: game.score});
+      }
+    );
+    scores = scores.sort(
+      function(a, b) {
+        return b.score - a.score;
+      }
+    );
+    scores.forEach(
+      function(score) {
+        console.log(score.name + ': ' + score.score);
+      }
+    );
+  }
+
+  static run_one(team_name) {
+    team = Teams.find(
+      function(team) {
+        return team.name == team_name;
+      }
+    );
+    if (team) {
+      var game = new Game(team);
+      game.run();
+      console.log(team_name + ': ' + game.score);
+    } else {
+      console.log('No team named ' + team_name + 'was found');
+    }
+  }
+
   constructor(team) {
     this.score = 0;
     this.turn = 0;
