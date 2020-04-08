@@ -11,7 +11,7 @@ clsss Api {
   }
 
   shared_storage() {
-    this.game.storage;
+    return this.game.storage;
   }
 
   north() {
@@ -35,34 +35,40 @@ clsss Api {
   } 
 
   eggs() {
-    this.game.eggs.map(
-      function(egg) {
-        return {x: egg.x, y: egg.y});
-      }
+    return(
+      this.game.eggs.map(
+        function(egg) {
+          return {x: egg.x, y: egg.y});
+        }
+      )
     );
   }
   
   bunny() {
-    return {
-      x: this.game.bunny.x,
-      y: this.game.bunny.y,
-      eggs_remaining: this.game.bunny.eggs_remaining
-    }
+    return(
+      {
+        x: this.game.bunny.x,
+        y: this.game.bunny.y,
+        eggs_remaining: this.game.bunny.eggs_remaining
+      }
+    );
   }
 
   kids() {
     var api = this;
-    this.game.kids.map(
-      function(kid) {
-        return(
-          {
-            x: kid.x,
-            y: kid.y,
-            me: (kid == api.source_kid)
-          }
-        );
-      }
-    ):
+    return(
+      this.game.kids.map(
+        function(kid) {
+          return(
+            {
+              x: kid.x,
+              y: kid.y,
+              me: (kid == api.source_kid)
+            }
+          );
+        }
+      )
+    );
   }
 
   kid() {
