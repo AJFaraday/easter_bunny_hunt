@@ -13,6 +13,18 @@ class Bunny {
       this.x += this.hop_x();
       this.y += this.hop_y();
     }
+    if (this.out_of_bounds()) {
+      this.game.end();
+    }
+  }
+
+  out_of_bounds() {
+    return(
+      this.x < 0 ||
+      this.y < 0 ||
+      this.x > 48 ||
+      this.y > 48
+    );
   }
 
   drop_egg() {
