@@ -13,7 +13,7 @@ class Bunny {
       this.x += this.hop_x();
       this.y += this.hop_y();
     }
-    if (this.out_of_bounds()) {
+    if (this.out_of_bounds() || this.eggs_remaining <= 0) {
       this.game.end();
     }
   }
