@@ -7,21 +7,27 @@ class Kid {
     this.x = x;
     this.y = y;
     this.api = new Api(game, this);
-    this.storage = {};
   }
 
   take_turn() {
     this.func(
-      this.api, 
-      this.storage, 
-      this.game.storage
+      this.api
     );
     this.move();
     this.check_collisions();
   }
 
   check_collisions() {
-
+    var egg = this.on_egg();
+    if(egg) {
+      this.game.score += 1;
+      var index = this.game.eggs.indexOf(egg);
+      this.game.eggs.splice(index, 1);
+    }
+    if (this.on_bunny()) {
+      this.game.score += 10;
+      this.game.bunny.caught = true;
+    }
   }
 
   move() {
