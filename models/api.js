@@ -1,4 +1,4 @@
-clsss Api {
+class Api {
 
   constructor(game, kid) {
     this.game = game;
@@ -15,19 +15,19 @@ clsss Api {
   }
 
   north() {
-    this.kid.direction = 'n';
+    this.source_kid.direction = 'n';
   }
 
   east() {
-    this.kid.direction = 'e'
+    this.source_kid.direction = 'e'
   }
 
   south() {
-    this.kid.direction = 's';
+    this.source_kid.direction = 's';
   }
 
   west() {
-    this.kid.direction = 'w';
+    this.source_kid.direction = 'w';
   }
 
   turn() {
@@ -38,7 +38,7 @@ clsss Api {
     return(
       this.game.eggs.map(
         function(egg) {
-          return {x: egg.x, y: egg.y});
+          return {x: egg.x, y: egg.y};
         }
       )
     );

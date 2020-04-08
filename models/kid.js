@@ -15,33 +15,34 @@ class Kid {
     );
     this.move();
     this.check_collisions();
+    this.direction = null;
   }
 
   check_collisions() {
     var egg = this.on_egg();
     if(egg) {
-      this.game.score += 1;
+      this.game.score_points(1);
       var index = this.game.eggs.indexOf(egg);
       this.game.eggs.splice(index, 1);
     }
     if (this.on_bunny()) {
-      this.game.score += 10;
+      this.game.score_points(10);
       this.game.end();
     }
   }
 
   move() {
     switch(this.direction) {
-      case n:
+      case 'n':
         this.y -= 1;
         break;
-      case e:
+      case 'e':
         this.x += 1;
         break;
-      case s:
+      case 's':
         this.y += 1;
         break;
-      case w:
+      case 'w':
         this.x -= 1;
     }
   }
@@ -52,12 +53,12 @@ class Kid {
       this.game.eggs.find(
         function(egg) {
           return(
-            egg.x == this.x &&
-            egg.y == this.y
+            egg.x == kid.x &&
+            egg.y == kid.y
           );
         }
-      );
-    )
+      )
+    );
   }
 
   on_bunny() {

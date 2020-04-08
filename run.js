@@ -1,4 +1,4 @@
-Game = require('easter_bunny_hunt.js.min');
+Game = require('./easter_bunny_hunt.min.js');
 
 if(process.argv[2]){
   Game.run_one(process.argv[2]);

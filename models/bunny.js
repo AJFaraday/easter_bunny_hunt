@@ -8,10 +8,12 @@ class Bunny {
   }
 
   move() {
-    if (this.hop_x != 0 && this.hop_y != 0) {
+    if (this.hop_x() != 0 || this.hop_y() != 0) {
       this.drop_egg();
       this.x += this.hop_x();
       this.y += this.hop_y();
+    } else {
+
     }
     if (this.out_of_bounds() || this.eggs_remaining <= 0) {
       this.game.end();
@@ -22,8 +24,8 @@ class Bunny {
     return(
       this.x < 0 ||
       this.y < 0 ||
-      this.x > 48 ||
-      this.y > 48
+      this.x > 49 ||
+      this.y > 49
     );
   }
 
@@ -44,28 +46,28 @@ class Bunny {
     var bunny = this;
     return this.game.kids.filter(
       function(k) {return k.y < bunny.y}
-    );
+    ).length;
   }
 
   kids_below() {
     var bunny = this;
     return this.game.kids.filter(
       function(k) {return k.y > bunny.y}
-    );
+    ).length;
   }
 
   kids_left() {
     var bunny = this;
     return this.game.kids.filter(
       function(k) {return k.x < bunny.x}
-    );
+    ).length;
   }
 
   kids_right() {
     var bunny = this;
     return this.game.kids.filter(
       function(k) {return k.x > bunny.x}
-    );
+    ).length;
   }
 
 }

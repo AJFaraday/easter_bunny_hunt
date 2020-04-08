@@ -1,11 +1,11 @@
-Teams = {};
+Teams = [];
 class Game {
 
   static run_all() {
     var scores = [];
     Teams.forEach(
       function(team) {
-        var game = Game.new(team);
+        var game = new Game(team);
         game.run(); 
         scores.push({name: game.name, score: game.score});
       }
@@ -23,7 +23,7 @@ class Game {
   }
 
   static run_one(team_name) {
-    team = Teams.find(
+    var team = Teams.find(
       function(team) {
         return team.name == team_name;
       }
@@ -52,10 +52,10 @@ class Game {
 
   place_kids(team) {
     this.kids = [
-      (new Kid(this, 0, 0, team.functions[0])),
-      (new Kid(this, 48, 0, team.functions[1])),
-      (new Kid(this, 48, 48, team.functions[2])),
-      (new Kid(this, 0, 48, team.functions[3]))
+      (new Kid(this, 1, 1, team.functions[0])),
+      (new Kid(this, 49, 1, team.functions[1])),
+      (new Kid(this, 49, 49, team.functions[2])),
+      (new Kid(this, 1, 49, team.functions[3]))
     ];
   }
 
@@ -66,6 +66,12 @@ class Game {
       if(this.turn > 1000000) {
         this.end();
       }
+    }
+  }
+
+  score_points(n) {
+    if(this.active) {
+      this.score += n;
     }
   }
 
