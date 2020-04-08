@@ -8,7 +8,6 @@ Installation:
 
 * `git clone git@github.com:AJFaraday/easter_bunny_hunt.git`
 * `npm install terser -g`
-* `script/package.sh`
 
 Usage:
 
@@ -20,6 +19,6 @@ script/run.sh my_team  # Run one team and see how it fares
 Adding an entry:
 
 * cp template.js teams/my_team.js
-* The name must be a single word identifier.
+* The name must be a single word identifier (if you want to use it as an argument to run.sh)
 * Fill in functions for the 4 kids.
 * `script/run.js my_team`
