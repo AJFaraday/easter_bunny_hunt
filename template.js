@@ -1,15 +1,20 @@
-Teams.template = [
-  function(api, my_storage, shared_storage) {
-    // NW hunter
-  },
-  function(api, my_storage, shared_storage) {
-    // NE hunter
-  },
-  function(api, my_storage, shared_storage) {
-    // SE hunter
-  },
-  function(api, my_storage, shared_storage) {
-    // SW hunter
+Teams.push(
+  {
+    name: 'template',
+    shared_storage: {},
+    functions: [
+      function(api) {
+        // NW kid
+      },
+      function(api) {
+        // NE kid
+      },
+      function(api) {
+        // SE kid
+      },
+      function(api) {
+        // SW kid
+      }
+    ]
   }
-]
-
+);
