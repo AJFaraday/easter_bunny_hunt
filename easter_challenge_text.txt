@@ -1,0 +1,113 @@
+Challenge: Chase the Easter Bunny around the garden, and grab as many eggs as you can.
+
+In this instance, the garden is a 2-dimensional grid with 49 rows and 49 columns.
+
+The Easter Bunny™️ is in the center of the garden, minding his own business, holding on to 100 Easter eggs. He'll hop away from where the most people are.
+
+When the Easter Bunny™️ hops, we all know he'll leave behind an Easter egg.
+
+Grab an Easter egg for 1 point.
+Grab the Easter Bunny for 10 points.
+
+The game starts with 4 hunters, one in each corner of the garden.
+
+The hunters can take 1 step each turn, in one of the 4 cardinal directions (North, South, East or West). When they've each taken a step (or decided not to), the bunny will take a move.
+
+The bunny can hop to any position up to 4 spaces away in both the x and y axes. It will decide where it will hop to by the position of the hunters.
+
+It will hop north if there are more hunters to the south than to the north (ignoring the same row). 
+If there are 3 to the south, and 1 to the north, it will hop north by 2 spaces.
+This same dynamic will be used to decide where it will hop to on the X axis.
+
+The game ends when:
+
+* The Easter Bunny™️ leaves the garden.
+* The Easter Bunny™️ drops his last egg.
+* The hunters catch the bunny.
+
+## How to hunt the bunny?
+
+Your code will take the form of an array of 4 JS functions, which will each control a hunter starting in these positions (in this order):
+
+* North West (0, 0)
+* North East (0, 48)
+* South East (48, 48)
+* South West (48, 0)
+
+The functions should each have this fingerprint:
+
+    function(api, my_storage, shared_storage) {
+    }
+
+* api is your function's interface to the game (see below)
+* my_storage is an object available to this function each time it's called.
+* shared_storage is an object available to all hunters each time they're called.
+
+### The API
+
+The api object presents these four movement functions:
+
+* api.north()
+* api.east()
+* api.south()
+* api.west()
+
+If any of these are called during your function, the hunter will take one step in that direction (or the last called of these four directions).
+If none of thess are called during your function, the hunter will stand still.
+
+It also provides information about the state of the game with these methods:
+
+* api.turn - Returns a number of turns taken in this game so far.
+* api.bunny - Returns an object of bunny-related info
+
+{
+  x: 25,
+  y: 25,
+  eggs_left: 100
+}
+
+* api.hunters
+
+[
+  {x: 0, y: 0, me: true}.
+  ...
+]
+
+* api.eggs
+
+[
+  x: 25,
+  y: 25
+]
+
+### Template
+
+Teams.concat(
+  [
+    function(api, my_storage, shared_storage) {
+      // NW hunter
+    },
+    function(api, my_storage, shared_storage) {
+      // NE hunter
+    },
+    function(api, my_storage, shared_storage) {
+      // SE hunter
+    },
+    function(api, my_storage, shared_storage) {
+      // SW hunter
+    }
+  ]
+)
+
+### How to participate (speculative)
+
+* `git clone git@github.com:someone/bunny_hunt.git`
+* `cd bunny_hunt`
+* `cp template_entry.js entries/my_entry.js`
+* (Write your hunter code)
+* `node one_match.js entries/my_entry.js` to see the result
+* `node all_matches.js` to see all results (if you import more entries)
+
+### Deadline
+
+This will run until the 19th of April, one week after Easter Sunday (in the traditions which celebrate Easter Sunday on the 12th of April this year).
