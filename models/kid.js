@@ -26,7 +26,7 @@ class Kid {
     }
     if (this.on_bunny()) {
       this.game.score += 10;
-      this.game.bunny.caught = true;
+      this.game.end();
     }
   }
 
