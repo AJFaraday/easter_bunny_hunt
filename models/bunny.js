@@ -2,12 +2,23 @@ class Bunny {
 
   constructor(game) {
     this.game = game;
-    this.x = 25;
-    this.y = 25;
+    this.x = 24;
+    this.y = 24;
     this.eggs_remaining = 100;
   }
 
   move() {
+    var bunny = this;
+    this.close_kids = this.game.kids.filter(
+      function (k) {
+        return (
+          k.y > (bunny.y - 5) &&
+          k.y < (bunny.y + 5) &&
+          k.x > (bunny.x - 5) &&
+          k.x < (bunny.x + 5)
+        )
+      }
+    );
     if (this.hop_x() != 0 || this.hop_y() != 0) {
       this.drop_egg();
       this.x += this.hop_x();
@@ -21,7 +32,7 @@ class Bunny {
   }
 
   out_of_bounds() {
-    return(
+    return (
       this.x < 0 ||
       this.y < 0 ||
       this.x > 49 ||
@@ -39,34 +50,42 @@ class Bunny {
   }
 
   hop_y() {
-    return this.kids_below() - this.kids_above();
+    return this.kids_above() - this.kids_below();
   }
 
   kids_above() {
     var bunny = this;
-    return this.game.kids.filter(
-      function(k) {return k.y < bunny.y}
+    return this.close_kids.filter(
+      function (k) {
+        return k.y < bunny.y
+      }
     ).length;
   }
 
   kids_below() {
     var bunny = this;
-    return this.game.kids.filter(
-      function(k) {return k.y > bunny.y}
+    return this.close_kids.filter(
+      function (k) {
+        return k.y > bunny.y
+      }
     ).length;
   }
 
   kids_left() {
     var bunny = this;
-    return this.game.kids.filter(
-      function(k) {return k.x < bunny.x}
+    return this.close_kids.filter(
+      function (k) {
+        return k.x < bunny.x
+      }
     ).length;
   }
 
   kids_right() {
     var bunny = this;
-    return this.game.kids.filter(
-      function(k) {return k.x > bunny.x}
+    return this.close_kids.filter(
+      function (k) {
+        return k.x > bunny.x
+      }
     ).length;
   }
 

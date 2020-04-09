@@ -1,6 +1,6 @@
-Challenge: Chase the Easter Bunny around the garden, and grab as many eggs as you can.
+# Chase the Easter Bunny and collect his eggs
 
-In this instance, the garden is a 2-dimensional grid with 49 rows and 49 columns.
+The garden is a 2-dimensional grid with 49 rows and 49 columns.
 
 The Easter Bunny™️ is in the center of the garden, minding his own business, holding on to 100 Easter eggs. He'll hop away from where the most people are.
 
@@ -9,25 +9,41 @@ When the Easter Bunny™️ hops, we all know he'll leave behind an Easter egg.
 Grab an Easter egg for 1 point.
 Grab the Easter Bunny for 10 points.
 
-The game starts with 4 hunters, one in each corner of the garden.
+The game starts with 4 kids, one in each corner of the garden.
 
-The hunters can take 1 step each turn, in one of the 4 cardinal directions (North, South, East or West). When they've each taken a step (or decided not to), the bunny will take a move.
+The kids can take 1 step each turn, in one of the 4 cardinal directions (North, South, East or West). When they've each taken a step (or decided not to), the bunny will take a move.
 
-The bunny can hop to any position up to 4 spaces away in both the x and y axes. It will decide where it will hop to by the position of the hunters.
+The bunny can hop to any position up to 4 spaces away in both the x and y axes. It will decide where it will hop to by the position of the kids.
 
-It will hop north if there are more hunters to the south than to the north (ignoring the same row). 
-If there are 3 to the south, and 1 to the north, it will hop north by 2 spaces.
-This same dynamic will be used to decide where it will hop to on the X axis.
+The bunny can see kids within 5 spaces of it in any direction (I'm using square distances for simplicity).
+For each axis, (ignoring the kids in a line with it) it will move away from the most kids it can see. e.g.
+
+* If it can see 1 kid to the right, and none to the left. it will hop 1 step to the west.
+* If it can see 3 below, and 1 above, it will hop 2 step north.
+* If there are 2 north, 1 south, and 2 west. it will hop directly to a space 1 step south and 2 steps west.
+
+Important quirks:
+
+* The bunny ignores kids on the same row when working out it's north/south hop, and in the same column for it's east/west.
+* If it can't see any kids, it will stay still until it can.
 
 The game ends when:
 
 * The Easter Bunny™️ leaves the garden.
 * The Easter Bunny™️ drops his last egg.
-* The hunters catch the bunny.
+* The kids catch the bunny.
+* The game reaches the configurable turn limit
+
+## Config
+
+You can edit conig.js to change two things about the run:
+
+* `match_limit` will allow you to end the game when you decide (competition will use 1,000 turns)
+* `turn_time` (ms) will set the interval when the game is rendering.
 
 ## How to hunt the bunny?
 
-Your code will take the form of an array of 4 JS functions, which will each control a hunter starting in these positions (in this order):
+Your code will take the form of an array of 4 JS functions, which will each control a kid starting in these positions (in this order):
 
 * North West (0, 0)
 * North East (0, 48)
@@ -36,44 +52,44 @@ Your code will take the form of an array of 4 JS functions, which will each cont
 
 The functions should each have this fingerprint:
 
-    function(api, my_storage, shared_storage) {
+    function(api) {
     }
 
-* api is your function's interface to the game (see below)
-* my_storage is an object available to this function each time it's called.
-* shared_storage is an object available to all hunters each time they're called.
+api is your function's interface to the game (see below).
 
 ### The API
 
 The api object presents these four movement functions:
 
-* api.north()
-* api.east()
-* api.south()
-* api.west()
+* `api.north()`
+* `api.east()`
+* `api.south()`
+* `api.west()`
 
-If any of these are called during your function, the hunter will take one step in that direction (or the last called of these four directions).
-If none of thess are called during your function, the hunter will stand still.
+If any of these are called during your function, the kid will take one step in that direction (or the last called of these four directions).
+If none of thess are called during your function, the kid will stand still.
 
 It also provides information about the state of the game with these methods:
 
-* api.turn - Returns a number of turns taken in this game so far.
-* api.bunny - Returns an object of bunny-related info
+* `api.my_storage()` - an object you can use to store data and functions for just this kid.
+* `api.shared_storage()` - an object you can use to store data and functions for the whole team.
+* `api.turn()` - Returns a number of turns taken in this game so far.
+* `api.bunny()` - Returns an object of bunny-related info
 
 {
-  x: 25,
-  y: 25,
+  x: 24,
+  y: 24,
   eggs_left: 100
 }
 
-* api.hunters
+* `api.kids()` tells you where all the kids are
 
 [
   {x: 0, y: 0, me: true}.
   ...
 ]
 
-* api.eggs
+* `api.eggs()` tells you qhere all the eggs are
 
 [
   x: 25,
@@ -82,31 +98,71 @@ It also provides information about the state of the game with these methods:
 
 ### Template
 
-Teams.concat(
-  [
-    function(api, my_storage, shared_storage) {
-      // NW hunter
-    },
-    function(api, my_storage, shared_storage) {
-      // NE hunter
-    },
-    function(api, my_storage, shared_storage) {
-      // SE hunter
-    },
-    function(api, my_storage, shared_storage) {
-      // SW hunter
-    }
-  ]
-)
+Teams.push(
+  {
+    name: 'template',
+    shared_storage: {},
+    functions: [
+      function(api) {
+        // NW kid
+      },
+      function(api) {
+        // NE kid
+      },
+      function(api) {
+        // SE kid
+      },
+      function(api) {
+        // SW kid
+      }
+    ]
+  }
+);
 
-### How to participate (speculative)
+* `name` must be a single-word identifier, if you want to run just a single entry.
+* `shared_storage` sets the initial state of `api.shared_storage`, it can be used to set data and functions for your team.
+* The array `functions` is the behaviour of the 4 kids chasing the bunny.
+
+### How to participate
+
+Change my_entry to your own team name.
 
 * `git clone git@github.com:someone/bunny_hunt.git`
 * `cd bunny_hunt`
-* `cp template_entry.js entries/my_entry.js`
-* (Write your hunter code)
-* `node one_match.js entries/my_entry.js` to see the result
+* `cp template_entry.js teams/my_entry.js`
+* (Write your team code)
+* `node one_match.js teams/my_entry.js` to watch the game
 * `node all_matches.js` to see all results (if you import more entries)
+
+When you're happy with the result, copy it in to an answer like so:
+
+```
+# my_entry - 10 points
+
+Any description you want to add goes here
+
+    Teams.push(
+      {
+        name: 'template',
+        shared_storage: {},
+        functions: [
+          function(api) {
+            // NW kid
+          },
+          function(api) {
+            // NE kid
+          },
+          function(api) {
+            // SE kid
+          },
+          function(api) {
+            // SW kid
+          }
+        ]
+      }
+    );
+
+```
 
 ### Deadline
 

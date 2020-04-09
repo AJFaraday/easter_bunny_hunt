@@ -1,4 +1,5 @@
 terser -o easter_bunny_hunt.min.js \
+  config.js \
   game.js \
   models/*.js \
   teams/*.js
