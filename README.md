@@ -12,8 +12,9 @@ Installation:
 Usage:
 
 ```bash
-script/run.sh          # Run all available teams and show scoreboard
-script/run.sh my_team  # Run one team and see how it fares
+script/run.sh                     # Run all available teams and show scoreboard
+script/run.sh my_team my_bunny    # Run one team and see how it fares
+script/run.sh my_team my_bunny 70 # Run one team and see how it fares up to turn N
 ```
 
 Adding an entry:

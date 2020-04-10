@@ -36,7 +36,8 @@ class Renderer {
 
 
     console.log(this.grid);
-    console.log(`team:  ${this.game.name}`);
+    console.log(`team:  ${this.game.team_name}`);
+    console.log(`bunny: ${this.game.bunny_name}`);
     console.log(`turn:  ${this.game.turn}`);
     console.log(`score: ${this.game.score}`)
   }

@@ -8,7 +8,7 @@ class Bunny {
     this.eggs_remaining = 100;
     this.hop_x = 0;
     this.hop_y = 0;
-    this.api = new BunnyApi(game, entry);
+    this.api = new BunnyApi(game, this, entry);
   }
 
   take_turn() {
@@ -37,7 +37,7 @@ class Bunny {
     if (this.x < 0) {this.x = 0}
     if (this.y < 0) {this.y = 0}
     if (this.x > 48) {this.x = 48}
-    if (this.x > 48) {this.x = 48}
+    if (this.y > 48) {this.y = 48}
   }
 
   drop_egg() {

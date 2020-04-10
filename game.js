@@ -6,37 +6,93 @@ class Game {
   static run_all() {
     var scores = [];
     Teams.forEach(
-      function (team) {
-        var game = new Game(team);
-        game.run();
-        scores.push({name: game.name, score: game.score});
+      function(team) {
+        Bunnies.forEach(
+          function(bunny) {
+            var game = new Game(team, bunny);
+            game.run();
+            scores.push(
+              {
+                team_name: game.team_name,
+                bunny_name: game.bunny_name,
+                score: game.score,
+                winner: game.winner
+              }
+            );
+          }
+        )
       }
     );
     scores = scores.sort(
-      function (a, b) {
+      function(a, b) {
         return b.score - a.score;
       }
     );
     scores.forEach(
-      function (score) {
-        console.log(score.name + ': ' + score.score);
+      function(score) {
+        console.log(`${score.team_name} Vs. ${score.bunny_name}: ${score.score} to ${score.winner}`);
       }
     );
   }
 
-  static run_one(team_name) {
+  static run_one(team_name, bunny_name) {
     var team = Teams.find(
-      function (team) {
+      function(team) {
         return team.name == team_name;
       }
     );
-    if (team) {
-      var game = new Game(team);
+    var bunny = Bunnies.find(
+      function(bunny) {
+        return bunny.name == bunny_name;
+      }
+    );
+    if(team && bunny) {
+      var game = new Game(team, bunny);
       game.attach_renderer();
       game.run();
-      console.log(team_name + ': ' + game.score);
+      console.log(
+        team_name + ' Vs. ' + bunny_name + ': ' +
+        game.score + ' to ' + game.winner
+      )
+      ;
     } else {
-      console.log('No team named ' + team_name + 'was found');
+      if (!team) {
+        console.log('No team named ' + team_name + 'was found');
+      }
+      if (!bunny) {
+        console.log('No bunny named ' + bunny_name + 'was found');
+      }
+    }
+  }
+
+  static run_to_turn(team_name, bunny_name, turn) {
+    var team = Teams.find(
+      function(team) {
+        return team.name == team_name;
+      }
+    );
+    var bunny = Bunnies.find(
+      function(bunny) {
+        return bunny.name == bunny_name;
+      }
+    );
+    if(team && bunny) {
+      var game = new Game(team, bunny);
+      game.attach_renderer();
+      config.match_limit = Number(turn) - 2;
+      game.run();
+      console.log(
+        team_name + ' Vs. ' + bunny_name + ': ' +
+        game.score + ' to ' + game.winner
+      )
+      ;
+    } else {
+      if (!team) {
+        console.log('No team named ' + team_name + 'was found');
+      }
+      if (!bunny) {
+        console.log('No bunny named ' + bunny_name + 'was found');
+      }
     }
   }
 
@@ -44,13 +100,14 @@ class Game {
     this.score = 0;
     this.turn = 0;
     this.active = true;
+    this.winner = null;
 
     this.bunny = new Bunny(this, bunny);
     this.eggs = [];
 
-    this.teram_name = team.name;
+    this.team_name = team.name;
     this.bunny_name = bunny.name;
-    
+
     this.storage = team.shared_storage;
     this.place_kids(team);
   }
@@ -69,7 +126,7 @@ class Game {
   }
 
   run() {
-    if (this.renderer) {
+    if(this.renderer) {
       var game = this;
       this.process = setInterval(
         function() {
@@ -78,30 +135,31 @@ class Game {
         config.turn_time
       )
     } else {
-      while (this.active) {
+      while(this.active) {
         this.take_turn();
       }
     }
   }
 
   score_points(n) {
-    if (this.active) {
+    if(this.active) {
       this.score += n;
     }
   }
 
   take_turn() {
-    this.kids.forEach(function (kid) {
+    this.kids.forEach(function(kid) {
       kid.take_turn();
     });
     this.bunny.take_turn();
-    if (this.renderer) {
+    if(this.renderer) {
       this.renderer.render();
-      if (!this.active) {
+      if(!this.active) {
         clearInterval(this.process)
       }
     }
-    if (this.turn > config.match_limit) {
+    if(this.turn > config.match_limit) {
+      this.winner = 'bunny';
       this.end();
     }
     this.turn += 1;

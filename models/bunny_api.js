@@ -1,13 +1,13 @@
 class BunnyApi {
 
-  constructor(game, entry) {
+  constructor(game, bunny, entry) {
     this.game = game;
     this.source_bunny = bunny;
-    this.storage = entry.storage;
+    this.storage_object = entry.storage;
   }
 
   storage() {
-    return this.storage;
+    return this.storage_object;
   }
 
   hop(x, y) {
@@ -33,9 +33,9 @@ class BunnyApi {
   bunny() {
     return (
       {
-        x: bunny.x,
-        y: bunny.y,
-        eggs_remaining: bunny.eggs_remaining
+        x: this.source_bunny.x,
+        y: this.source_bunny.y,
+        eggs_remaining: this.source_bunny.eggs_remaining
       }
     );
   }
@@ -53,8 +53,7 @@ class BunnyApi {
           return (
           {
             x: kid.x,
-            y: kid.y,
-            me: (kid == api.source_kid)
+            y: kid.y
           }
           );
         }
@@ -68,7 +67,7 @@ class BunnyApi {
       b.x <= (a.x + 5) &&
       b.x >= (a.x - 5) &&
       b.y <= (a.y + 5) &&
-      b.y <= (a.y + 5)
+      b.y >= (a.y - 5)
     );
   }
 

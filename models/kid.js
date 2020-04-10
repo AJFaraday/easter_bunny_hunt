@@ -19,12 +19,13 @@ class Kid {
   }
 
   check_collisions() {
+    var kid = this;
     var eggs = this.on_egg();
     if(eggs) {
       this.game.score_points(eggs.length);
       eggs.forEach(function(egg){
-        var index = this.game.eggs.indexOf(egg);
-        this.game.eggs.splice(index, 1);
+        var index = kid.game.eggs.indexOf(egg);
+        kid.game.eggs.splice(index, 1);
       });
     }
     if (this.on_bunny()) {
@@ -50,7 +51,7 @@ class Kid {
     if (this.x < 0) {this.x = 0}
     if (this.y < 0) {this.y = 0}
     if (this.x > 48) {this.x = 48}
-    if (this.x > 48) {this.x = 48}
+    if (this.y > 48) {this.y = 48}
   }
 
   on_egg() {
