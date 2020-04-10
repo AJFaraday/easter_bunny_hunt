@@ -1,4 +1,5 @@
 Teams = [];
+Bunnies = [];
 
 class Game {
 
@@ -39,15 +40,17 @@ class Game {
     }
   }
 
-  constructor(team) {
+  constructor(team, bunny) {
     this.score = 0;
     this.turn = 0;
     this.active = true;
 
-    this.bunny = new Bunny(this);
+    this.bunny = new Bunny(this, bunny);
     this.eggs = [];
 
-    this.name = team.name;
+    this.teram_name = team.name;
+    this.bunny_name = bunny.name;
+    
     this.storage = team.shared_storage;
     this.place_kids(team);
   }
@@ -91,7 +94,7 @@ class Game {
     this.kids.forEach(function (kid) {
       kid.take_turn();
     });
-    this.bunny.move();
+    this.bunny.take_turn();
     if (this.renderer) {
       this.renderer.render();
       if (!this.active) {

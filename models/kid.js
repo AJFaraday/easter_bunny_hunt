@@ -6,7 +6,7 @@ class Kid {
     this.direction = null;
     this.x = x;
     this.y = y;
-    this.api = new Api(game, this);
+    this.api = new KidApi(game, this);
   }
 
   take_turn() {
@@ -19,14 +19,16 @@ class Kid {
   }
 
   check_collisions() {
-    var egg = this.on_egg();
-    if(egg) {
-      this.game.score_points(1);
-      var index = this.game.eggs.indexOf(egg);
-      this.game.eggs.splice(index, 1);
+    var eggs = this.on_egg();
+    if(eggs) {
+      this.game.score_points(eggs.length);
+      eggs.forEach(function(egg){
+        var index = this.game.eggs.indexOf(egg);
+        this.game.eggs.splice(index, 1);
+      });
     }
     if (this.on_bunny()) {
-      this.game.score_points(10);
+      this.game.winner = 'kids';
       this.game.end();
     }
   }
@@ -45,12 +47,16 @@ class Kid {
       case 'w':
         this.x -= 1;
     }
+    if (this.x < 0) {this.x = 0}
+    if (this.y < 0) {this.y = 0}
+    if (this.x > 48) {this.x = 48}
+    if (this.x > 48) {this.x = 48}
   }
 
   on_egg() {
     var kid = this;
     return(
-      this.game.eggs.find(
+      this.game.eggs.filter(
         function(egg) {
           return(
             egg.x == kid.x &&
