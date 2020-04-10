@@ -4,14 +4,14 @@ Bunnies = [];
 class Game {
 
   static run_all() {
-    var scores = [];
+    var matches = [];
     Teams.forEach(
       function(team) {
         Bunnies.forEach(
           function(bunny) {
             var game = new Game(team, bunny);
             game.run();
-            scores.push(
+            matches.push(
               {
                 team_name: game.team_name,
                 bunny_name: game.bunny_name,
@@ -23,11 +23,22 @@ class Game {
         )
       }
     );
-    scores = scores.sort(
+    matches = matches.sort(
       function(a, b) {
         return b.score - a.score;
       }
     );
+
+    console.log('Matches:');
+    scores.forEach(
+      function(match){
+        console.log(
+          match.team_name + ' Vs. ' + match.bunny_name + ': ' +
+          match.score + ' to ' + match.winner
+      }
+    );
+    console.log('');
+
     score_board = {teams = {}, bunnies: {}};
     scores.forEach(
       function(score) {
@@ -45,6 +56,36 @@ class Game {
             score_board.teams[game.team_name] = game.score;
           }
         }
+      }
+    );
+    console.log('Teams:');
+    Object.keys(score_board.teams).map(
+      function(team_name) {
+        return {name: team_name, score: score_board.teams[team_name]}
+      }
+    ).sort(
+      function(a, b) {
+        return b.score - a.score;
+      }
+    ).forEach(
+      function(team) {
+        console.log(team.name + ': ' + team.score);
+      }
+    );
+    console.log('');
+
+    console.log('Bunnies:');
+    Object.keys(score_board.bunnies).map(
+      function(bunny_name) {
+        return {name: bunny_name, score: score_board.bunnies[bunny_name]}
+      }
+    ).sort(
+      function(a, b) {
+        return b.score - a.score;
+      }
+    ).forEach(
+      function(bunny) {
+        console.log(bunny.name + ': ' + bunny.score);
       }
     );
   }
