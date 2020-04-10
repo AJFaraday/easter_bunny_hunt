@@ -28,9 +28,23 @@ class Game {
         return b.score - a.score;
       }
     );
+    score_board = {teams = {}, bunnies: {}};
     scores.forEach(
       function(score) {
         console.log(`${score.team_name} Vs. ${score.bunny_name}: ${score.score} to ${score.winner}`);
+        if (game.winner == 'bunny') {
+          if (score_board.bunnies[game.bunny_name]) {
+            score_board.bunnies[game.bunny_name] += game.score;
+          } else {
+            score_board.bunnies[game.bunny_name] = game.score;
+          }
+        } else if (game.winner == 'kids') {
+          if (score_board.teams[game.team_name]) {
+            score_board.teams[game.team_name] += game.score;
+          } else {
+            score_board.teams[game.team_name] = game.score;
+          }
+        }
       }
     );
   }
