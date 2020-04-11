@@ -10,6 +10,10 @@ The game starts with 4 kids, one in each corner of the garden.
 
 The kids can take 1 step each turn, in one of the 4 cardinal directions (North, South, East or West). When they've each taken a step (or decided not to), the bunny will take a move.
 
+Kids' movement (green) and visibility (yellow):
+
+
+
 The bunny can hop up to 2 spaces away on both axes (describing a 5 x 5 square he can hop to).
 
 The kids can only see the Easter Bunnys or it's eggs when they are 5 steps away or nearer.
@@ -142,7 +146,7 @@ You will need nodejs installed.
 
 Change my_entry to your own team name.
 
-* `git clone git@github.com:someone/bunny_hunt.git`
+* `git clone https://github.com/AJFaraday/easter_bunny_hunt.git`
 * `npm install terser -g`
 * `cd bunny_hunt`
 * `cp team_template.js teams/my_entry.js`
@@ -263,10 +267,10 @@ You will need nodejs installed.
 
 Change my_entry to your own bunny name.
 
-* `git clone git@github.com:someone/bunny_hunt.git`
+* `https://github.com/AJFaraday/easter_bunny_hunt.git`
 * `npm install terser -g`
 * `cd bunny_hunt`
-* `cp bunny_template.js bunny/my_entry.js`
+* `cp bunny_template.js bunnies/my_entry.js`
 * (Write your team code)
 * `node one_match.js get_egg my_entry` to watch a game. The first argument is the name of a team in teams/, the second is the name your bunny.
 * `node all_matches.js` to run all matches and see all results (if you import more entries)
@@ -293,4 +297,3 @@ When you're happy with the result, copy it in to an answer like so:
 
 Then have a try at writing an entry for a team of kids.
 
-   
