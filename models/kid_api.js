@@ -43,7 +43,11 @@ class KidApi {
         }
       ).map(
         function(egg) {
-          return {x: egg.x, y: egg.y};
+          return {
+            x: egg.x,
+            y: egg.y,
+            age: (api.game.turn - egg.dropped_turn)
+          };
         }
       )
     );

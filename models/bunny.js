@@ -29,6 +29,14 @@ class Bunny {
       this.game.winner = 'bunny';
       this.game.end();
     }
+    this.game.kids.forEach(
+      function(kid) {
+        if (kid.on_bunny()) {
+          kid.game.winner = 'kids';
+          kid.game.end();
+        }  
+      }
+    );
   }
 
   hop(x, y) {
@@ -41,7 +49,7 @@ class Bunny {
   }
 
   drop_egg() {
-    this.game.eggs.push({x: this.x, y: this.y});
+    this.game.eggs.push({x: this.x, y: this.y, dropped_turn: this.game.turn});
     this.eggs_remaining -= 1;
   }
 

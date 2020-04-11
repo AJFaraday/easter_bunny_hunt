@@ -1,4 +1,4 @@
-# C&R: Chase the Easter Bunny, be the Easter Bunny
+# C&R: Chase the Easter Bunny™️️, be the Easter Bunny™
 
 The garden is a 2-dimensional grid with 49 rows and 49 columns.
 
@@ -10,7 +10,7 @@ The game starts with 4 kids, one in each corner of the garden.
 
 The kids can take 1 step each turn, in one of the 4 cardinal directions (North, South, East or West). When they've each taken a step (or decided not to), the bunny will take a move.
 
-The bunny can hop up to 2 spaces away on both axes (describing a 5 x 5 square he can hop to.
+The bunny can hop up to 2 spaces away on both axes (describing a 5 x 5 square he can hop to).
 
 The kids can only see the Easter Bunnys or it's eggs when they are 5 steps away or nearer.
 
@@ -47,12 +47,18 @@ You can edit conig.js to change two things about the run:
 
 # As the kids:
 
+(See instructions for the bunny below)
+
+Your goal is to collect as many eggs as you can, and then catch the Easter Bunny™.
+
 Your code will take the form of an array of 4 JS functions, which will each control a kid starting in these positions (in this order):
 
 * North West (0, 0)
 * North East (0, 48)
 * South East (48, 48)
 * South West (48, 0)
+
+If you're watching a match, these are represented by the numbers 1 to 4.
 
 The functions should each have this fingerprint:
 
@@ -61,7 +67,7 @@ The functions should each have this fingerprint:
 
 api is your function's interface to the game (see below).
 
-### The API
+## The Kid API
 
 The api object presents these four movement functions:
 
@@ -71,79 +77,39 @@ The api object presents these four movement functions:
 * `api.west()`
 
 If any of these are called during your function, the kid will take one step in that direction (or the last called of these four directions).
-If none of thess are called during your function, the kid will stand still.
+If none of these are called during your function, the kid will stand still.
 
 It also provides information about the state of the game with these methods:
 
 * `api.my_storage()` - an object you can use to store data and functions for just this kid.
 * `api.shared_storage()` - an object you can use to store data and functions for the whole team.
 * `api.turn()` - Returns a number of turns taken in this game so far.
-* `api.bunny()` - Returns an object of bunny-related info
+* `api.bunny()` - Returns an object of bunny-related info if the bunny can be seen
 
-{
-  x: 24,
-  y: 24,
-  eggs_left: 100
-}
+    {
+      x: 24,
+      y: 24,
+      eggs_left: 100
+    }
 
 * `api.kids()` tells you where all the kids are
 
-[
-  {x: 0, y: 0, me: true}.
-  ...
-]
-
-* `api.eggs()` tells you qhere all the eggs are
-
-[
-  x: 25,
-  y: 25
-]
-
-### Template
-
-Teams.push(
-  {
-    name: 'template',
-    shared_storage: {},
-    functions: [
-      function(api) {
-        // NW kid
-      },
-      function(api) {
-        // NE kid
-      },
-      function(api) {
-        // SE kid
-      },
-      function(api) {
-        // SW kid
-      }
+    [
+      {x: 0, y: 0, me: true}.
+      ...
     ]
-  }
-);
 
-* `name` must be a single-word identifier, if you want to run just a single entry.
-* `shared_storage` sets the initial state of `api.shared_storage`, it can be used to set data and functions for your team.
-* The array `functions` is the behaviour of the 4 kids chasing the bunny.
+* `api.eggs()` tells you where the eggs are that your child can currently see:
 
-### How to participate
+    {
+      x: 25,
+      y: 25,
+      age: 10
+    }
 
-Change my_entry to your own team name.
+Age is the number of turns since the bunny dropped the egg.
 
-* `git clone git@github.com:someone/bunny_hunt.git`
-* `cd bunny_hunt`
-* `cp template_entry.js teams/my_entry.js`
-* (Write your team code)
-* `node one_match.js teams/my_entry.js` to watch the game
-* `node all_matches.js` to see all results (if you import more entries)
-
-When you're happy with the result, copy it in to an answer like so:
-
-```
-# my_entry - 10 points
-
-Any description you want to add goes here
+## Kid Template
 
     Teams.push(
       {
@@ -166,8 +132,165 @@ Any description you want to add goes here
       }
     );
 
+* `name` must be a single-word identifier, if you want to run just a single entry.
+* `shared_storage` sets the initial state of `api.shared_storage`, it can be used to set data and functions for your team.
+* The array `functions` is the behaviour of the 4 kids chasing the bunny.
+
+## How to participate
+
+You will need nodejs installed.
+
+Change my_entry to your own team name.
+
+* `git clone git@github.com:someone/bunny_hunt.git`
+* `npm install terser -g`
+* `cd bunny_hunt`
+* `cp team_template.js teams/my_entry.js`
+* (Write your team code)
+* `node one_match.js my_entry basic` to watch a game. The first entry is the name of your team, the second is the name of an entry in bunnies/.
+* `node all_matches.js` to run all matches and see all results (if you import more entries)
+
+When you're happy with the result, copy it in to an answer like so:
+
+
 ```
 
-### Deadline
+    # Team: my_entry - 10 points
 
-This will run until the 19th of April, one week after Easter Sunday (in the traditions which celebrate Easter Sunday on the 12th of April this year).
+    Any description you want to add goes here
+
+        Teams.push(
+          {
+            name: 'template',
+            shared_storage: {},
+            functions: [
+              function(api) {
+                // NW kid
+              },
+              function(api) {
+                // NE kid
+              },
+              function(api) {
+                // SE kid
+              },
+              function(api) {
+                // SW kid
+              }
+            ]
+          }
+        );
+
+```
+
+Then have a try at writing an entry for the Easter Bunny™.
+
+# As the Bunny
+
+Your goal is to give away as many easter eggs as you can and, crucially, to evade capture.
+
+The bunny starts at the centre of the garden, at coordinates 24, 24.
+
+
+Your code takes the form of a function with this finger print which runs once a turn, after the children have moved.
+
+    function(api) {
+    }
+
+## The Bunny API
+
+The api object provides this method to tell the bunny how to move:
+
+* `api.hop(x, y)`
+
+The two arguments tell the bunny where to hop to relative to it's current position:
+
+* They can have values from -2 through to 2.
+* If `x` is positive, it will hop east, negative, it'll hop west.
+* If `y` is positive, it will hop south, negative, it'll hop north.
+* If the values provided are out of range, it will force it to 2 or -2.
+* Each time the bunny hops, it leaves behind an Easter egg.
+
+It also provides this functions to give you storage between turns:
+
+* `api.storage()` - Returns an object you can use to store variables.
+
+ And these functions to give you information about the game:
+
+* `api.turn()` - Returns the turn number the game is currently at.
+* `api.eggs()` - Returns the positions of all Easter eggs in the garden.
+
+    {
+      x: 25,
+      y: 25,
+      age: 10
+    }
+
+* `api.bunny()` - Provides information on the current state of the bunny
+
+    {
+      x: 24,
+      y: 24,
+      eggs_left: 100
+    }
+
+* `api.kids()` - Provides information on all the kids the bunny can currently see.
+
+
+    {
+      x: 0,
+      y: 0
+    }
+
+## Bunny Template
+
+    Bunnies.push(
+      {
+        name: 'template',
+        storage: {},
+        function: function(api) {
+
+        }
+      }
+    );
+
+* `name` is the name of your bunny behaviour. Keep it to 1 word (underscores allowed).
+* `storage` is the current state of your storage object, available via the api.
+* `function` is the function which will be run every turn to control the bunny.
+
+## How to participate
+
+You will need nodejs installed.
+
+Change my_entry to your own bunny name.
+
+* `git clone git@github.com:someone/bunny_hunt.git`
+* `npm install terser -g`
+* `cd bunny_hunt`
+* `cp bunny_template.js bunny/my_entry.js`
+* (Write your team code)
+* `node one_match.js get_egg my_entry` to watch a game. The first argument is the name of a team in teams/, the second is the name your bunny.
+* `node all_matches.js` to run all matches and see all results (if you import more entries)
+
+When you're happy with the result, copy it in to an answer like so:
+
+
+```
+    # Bunny: my_entry - 10 points
+
+    Any description you want to add goes here
+
+    Bunnies.push(
+      {
+        name: 'template',
+        storage: {},
+        function: function(api) {
+
+        }
+      }
+    );
+
+```
+
+Then have a try at writing an entry for a team of kids.
+
+   
