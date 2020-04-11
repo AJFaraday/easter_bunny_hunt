@@ -41,21 +41,15 @@ class Game {
     console.log('');
 
     var score_board = {teams: {}, bunnies: {}};
+    Teams.forEach(function(team) {score_board.teams[team.name] = 0;});
+    Bunnies.forEach(function(bunny) {score_board.bunnies[bunny.name] = 0;});
     matches.forEach(
       function(match) {
         console.log(`${match.team_name} Vs. ${match.bunny_name}: ${match.score} to ${match.winner}`);
         if(match.winner == 'bunny') {
-          if(score_board.bunnies[match.bunny_name]) {
-            score_board.bunnies[match.bunny_name] += match.score;
-          } else {
-            score_board.bunnies[match.bunny_name] = match.score;
-          }
+          score_board.bunnies[match.bunny_name] += match.score;
         } else if(match.winner == 'kids') {
-          if(score_board.teams[match.team_name]) {
-            score_board.teams[match.team_name] += match.score;
-          } else {
-            score_board.teams[match.team_name] = match.score;
-          }
+          score_board.teams[match.team_name] += match.score;
         }
       }
     );
