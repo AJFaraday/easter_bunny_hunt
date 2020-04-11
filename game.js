@@ -30,30 +30,31 @@ class Game {
     );
 
     console.log('Matches:');
-    scores.forEach(
-      function(match){
+    matches.forEach(
+      function(match) {
         console.log(
           match.team_name + ' Vs. ' + match.bunny_name + ': ' +
           match.score + ' to ' + match.winner
+        )
       }
     );
     console.log('');
 
-    score_board = {teams = {}, bunnies: {}};
-    scores.forEach(
-      function(score) {
-        console.log(`${score.team_name} Vs. ${score.bunny_name}: ${score.score} to ${score.winner}`);
-        if (game.winner == 'bunny') {
-          if (score_board.bunnies[game.bunny_name]) {
-            score_board.bunnies[game.bunny_name] += game.score;
+    var score_board = {teams: {}, bunnies: {}};
+    matches.forEach(
+      function(match) {
+        console.log(`${match.team_name} Vs. ${match.bunny_name}: ${match.score} to ${match.winner}`);
+        if(match.winner == 'bunny') {
+          if(score_board.bunnies[match.bunny_name]) {
+            score_board.bunnies[match.bunny_name] += match.score;
           } else {
-            score_board.bunnies[game.bunny_name] = game.score;
+            score_board.bunnies[match.bunny_name] = match.score;
           }
-        } else if (game.winner == 'kids') {
-          if (score_board.teams[game.team_name]) {
-            score_board.teams[game.team_name] += game.score;
+        } else if(match.winner == 'kids') {
+          if(score_board.teams[match.team_name]) {
+            score_board.teams[match.team_name] += match.score;
           } else {
-            score_board.teams[game.team_name] = game.score;
+            score_board.teams[match.team_name] = match.score;
           }
         }
       }
@@ -106,15 +107,15 @@ class Game {
       game.attach_renderer();
       game.run();
       console.log(
-        team_name + ' Vs. ' + bunny_name + ': ' +
+        game.team_name + ' Vs. ' + game.bunny_name + ': ' +
         game.score + ' to ' + game.winner
       )
       ;
     } else {
-      if (!team) {
+      if(!team) {
         console.log('No team named ' + team_name + 'was found');
       }
-      if (!bunny) {
+      if(!bunny) {
         console.log('No bunny named ' + bunny_name + 'was found');
       }
     }
@@ -137,15 +138,15 @@ class Game {
       config.match_limit = Number(turn) - 2;
       game.run();
       console.log(
-        team_name + ' Vs. ' + bunny_name + ': ' +
+        game.team_name + ' Vs. ' + game.bunny_name + ': ' +
         game.score + ' to ' + game.winner
       )
       ;
     } else {
-      if (!team) {
+      if(!team) {
         console.log('No team named ' + team_name + 'was found');
       }
-      if (!bunny) {
+      if(!bunny) {
         console.log('No bunny named ' + bunny_name + 'was found');
       }
     }
