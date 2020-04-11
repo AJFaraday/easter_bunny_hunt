@@ -1,38 +1,42 @@
-# Chase the Easter Bunny and collect his eggs
+# C&R: Chase the Easter Bunny, be the Easter Bunny
 
 The garden is a 2-dimensional grid with 49 rows and 49 columns.
 
-The Easter Bunny™️ is in the center of the garden, minding his own business, holding on to 100 Easter eggs. He'll hop away from where the most people are.
+The Easter Bunny™️ is in the center of the garden, minding his own business, holding on to 100 Easter eggs.
 
-When the Easter Bunny™️ hops, we all know he'll leave behind an Easter egg.
-
-Grab an Easter egg for 1 point.
-Grab the Easter Bunny for 10 points.
+Unfortunately, there's a team of 4 children who aren't content to collect chocolate eggs, they want to capture the Easter Bunny™.
 
 The game starts with 4 kids, one in each corner of the garden.
 
 The kids can take 1 step each turn, in one of the 4 cardinal directions (North, South, East or West). When they've each taken a step (or decided not to), the bunny will take a move.
 
-The bunny can hop to any position up to 4 spaces away in both the x and y axes. It will decide where it will hop to by the position of the kids.
+The bunny can hop up to 2 spaces away on both axes (describing a 5 x 5 square he can hop to.
 
-The bunny can see kids within 5 spaces of it in any direction (I'm using square distances for simplicity).
-For each axis, (ignoring the kids in a line with it) it will move away from the most kids it can see. e.g.
+The kids can only see the Easter Bunnys or it's eggs when they are 5 steps away or nearer.
 
-* If it can see 1 kid to the right, and none to the left. it will hop 1 step to the west.
-* If it can see 3 below, and 1 above, it will hop 2 step north.
-* If there are 2 north, 1 south, and 2 west. it will hop directly to a space 1 step south and 2 steps west.
+The Easter Bunny™ can only see the kids when they are 5 steps away or nearer.
 
-Important quirks:
-
-* The bunny ignores kids on the same row when working out it's north/south hop, and in the same column for it's east/west.
-* If it can't see any kids, it will stay still until it can.
+Neither kids nor bunny can leave the garden.
 
 The game ends when:
 
-* The Easter Bunny™️ leaves the garden.
 * The Easter Bunny™️ drops his last egg.
 * The kids catch the bunny.
-* The game reaches the configurable turn limit
+* The game reaches turn 1000.
+
+The Goals:
+
+* The Easter Bunny™ wants to give the children as many Easter Eggs as possible while evading capture.
+* The kids want to collect as many eggs as possible, AND catch the Easter Bunny™.
+
+This means that:
+
+* The Easter Bunny™ will ONLY score points if it evades capture by dropping it's last egg, or by finishing the time limit.
+* The team of kids will ONLY score points if they capture the Easter Bunny™.
+* In either case the points scored is the number of eggs the kids have picked up.
+
+The challenge is to write behaviour for the Easter Bunny™ or for the team of kids. Your code will be run against all of the
+other kind of entry.
 
 ## Config
 
@@ -41,7 +45,7 @@ You can edit conig.js to change two things about the run:
 * `match_limit` will allow you to end the game when you decide (competition will use 1,000 turns)
 * `turn_time` (ms) will set the interval when the game is rendering.
 
-## How to hunt the bunny?
+# As the kids:
 
 Your code will take the form of an array of 4 JS functions, which will each control a kid starting in these positions (in this order):
 
