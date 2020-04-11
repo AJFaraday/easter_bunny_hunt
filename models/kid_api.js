@@ -101,7 +101,7 @@ class KidApi {
       b.x <= (a.x + 5) &&
       b.x >= (a.x - 5) &&
       b.y <= (a.y + 5) &&
-      b.y <= (a.y + 5)
+      b.y >= (a.y - 5)
     );
   }
 
