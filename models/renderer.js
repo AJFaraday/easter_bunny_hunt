@@ -22,18 +22,17 @@ class Renderer {
   render() {
     var renderer = this;
     this.grid = this.template_grid();
+    this.game.eggs.forEach(
+      function(egg) {
+        renderer.draw_object(egg, 'o');
+      }
+    );
     this.draw_object(this.game.bunny, 'B');
     this.game.kids.forEach(
       function(kid, index) {
         renderer.draw_object(kid, (index + 1));
       }
     );
-    this.game.eggs.forEach(
-      function(egg) {
-        renderer.draw_object(egg, 'o');
-      }
-    );
-
 
     console.log(this.grid);
     console.log(`team:  ${this.game.team_name}`);
